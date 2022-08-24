@@ -41,7 +41,7 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")  //DELETE http://localhost:8080/student/23
-    public ResponseEntity deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }

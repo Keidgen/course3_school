@@ -23,7 +23,7 @@ public class FacultyService {
     }
 
     public Faculty findFaculty(long id) {
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElseThrow();
     }
 
     public Faculty editFaculty(Faculty faculty) {
@@ -35,12 +35,6 @@ public class FacultyService {
     }
 
     public Collection<Faculty> findByColor(String color) {
-        ArrayList<Faculty> result = new ArrayList<>();
-        for (Faculty faculty : facultyRepository.findAll()) {
-            if (Objects.equals(faculty.getColor(), color)) {
-                result.add(faculty);
-            }
-        }
-        return result;
+        return facultyRepository.findByColor(color);
     }
 }
