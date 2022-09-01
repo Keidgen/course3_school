@@ -57,7 +57,7 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) Integer ageFrom, @RequestParam(required = false) Integer ageTo) {
-        if ((ageFrom == null || ageFrom > 0) && (ageTo == null || ageTo > 0)) {
+        if ((ageFrom == null || ageFrom <= 0) && (ageTo == null || ageTo <= 0)) {
             return ResponseEntity.ok(studentService.findAll());
         }
         if ((ageFrom != null && ageFrom > 0) && (ageTo != null && ageTo > 0)) {
@@ -66,12 +66,12 @@ public class StudentController {
         return ResponseEntity.ok(studentService.findByAge(ageFrom));
     }
 
-    @GetMapping("student_faculty")
-    public ResponseEntity<Faculty> getStudentFaculty(@RequestParam Integer id) {
-        if (id != null && id > 0) {
+    @GetMapping("{id}/faculty")
+    public ResponseEntity<Faculty> getStudentFaculty(@PathVariable Integer id) {
+        if (id > 0) {
             return ResponseEntity.ok(studentService.findStudent(id).getFaculty());
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.notFound().build();
     }
 
 }

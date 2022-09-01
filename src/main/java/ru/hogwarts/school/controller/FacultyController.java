@@ -58,8 +58,8 @@ public class FacultyController {
     }
 
     @GetMapping("{id}/students")
-    public ResponseEntity<Collection<Student>> findStudentByFaculty(@RequestParam Integer id) {
-        if (id != null && id > 0) {
+    public ResponseEntity<Collection<Student>> findStudentByFaculty(@PathVariable Integer id) {
+        if (id > 0) {
             return ResponseEntity.ok(facultyService.findFaculty(id).getStudents());
         }
         return ResponseEntity.ok(Collections.emptyList());
