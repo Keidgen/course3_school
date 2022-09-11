@@ -177,7 +177,7 @@ class Course3SchoolApplicationTests {
         URI getUri = getUriBuilder().path("/{id}").buildAndExpand(createdStudent.getId()).toUri();
         ResponseEntity<Student> emptyRs = restTemplate.getForEntity(getUri, Student.class);
 
-        Assertions.assertThat(emptyRs.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        Assertions.assertThat(emptyRs.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private void resetIds(Collection<Student> students) {
