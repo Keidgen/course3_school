@@ -40,4 +40,16 @@ public class StudentService {
     public Collection<Student> findAll() {
         return studentRepository.findAll();
     }
+
+    public Integer getCountStudents() {
+        return studentRepository.getCountStudents();
+    }
+
+    public Integer getAverageAgeStudents() {
+        return studentRepository.getAverageAgeStudents();
+    }
+
+    public Collection<Student> getLastStudents(Integer count) {
+        return studentRepository.getLastStudents(count);
+    }
 }
