@@ -91,7 +91,7 @@ public class StudentController {
     }
 
     @GetMapping("/average_age")
-    public ResponseEntity<Integer> getAverageAgeStudents() {
+    public ResponseEntity<Double> getAverageAgeStudents() {
         return ResponseEntity.ok(studentService.getAverageAgeStudents());
     }
 
