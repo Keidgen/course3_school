@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/student")
@@ -100,4 +101,18 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getLastStudents(count));
     }
 
+    @GetMapping("/sorted_by_word")
+    public ResponseEntity<List<String>> getStudentStartWithLetter(@RequestParam(name = "char") char letter) {
+        return ResponseEntity.ok(studentService.getStudentStartWithLetter(letter));
+    }
+
+    @GetMapping("/average_age_stream")
+    public ResponseEntity<Double> getAverageAgeStudentsWithStreams() {
+        return ResponseEntity.ok(studentService.getAverageAgeStudentsWithStreams());
+    }
+
+    @GetMapping("/calc_parallel")
+    public ResponseEntity<Integer> getCalcParallel() {
+        return ResponseEntity.ok(studentService.getCalcParallel());
+    }
 }
