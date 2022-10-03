@@ -13,12 +13,9 @@ import java.util.Collections;
 @RequestMapping("/faculty")
 public class FacultyController {
     private final FacultyService facultyService;
-
     public FacultyController(FacultyService facultyService) {
         this.facultyService = facultyService;
     }
-
-
     @GetMapping("{id}") //GET http://localhost:8080/faculty/23
     public ResponseEntity<Faculty> getFacultyInfo(@PathVariable Long id) {
         Faculty faculty = facultyService.findFaculty(id);
