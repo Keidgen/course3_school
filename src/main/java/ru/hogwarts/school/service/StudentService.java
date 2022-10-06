@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class StudentService {
@@ -34,7 +37,7 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public void deleteStudent(long id){
+    public void deleteStudent(long id) {
         logger.info("Was invoked method for delete student");
         logger.debug("We deleting student with id = {}", id);
         studentRepository.deleteById(id);
@@ -69,4 +72,43 @@ public class StudentService {
         logger.info("Was invoked method for get {} last students", count);
         return studentRepository.getLastStudents(count);
     }
+
+    public List<String> getStudentStartWithLetter(char letter) {
+        logger.info("Was invoked method for get students starting with letter {}", letter);
+        String letter_2 = String.valueOf(letter).toUpperCase();
+        Collection<Student> students = findAll();
+
+
+        return students.stream()
+                .map(Student::getName)
+                .map(String::toUpperCase)
+                .filter(student -> student.startsWith(letter_2))
+                .sorted()
+                .collect(Collectors.toList());
+
+    }
+
+    public Double getAverageAgeStudentsWithStreams() {
+        logger.info("Was invoked method for get average age of students with using stream api");
+        Collection<Student> students = findAll();
+
+        return students
+                .stream()
+                .mapToDouble(Student::getAge)
+                .average()
+                .orElseThrow();
+    }
+
+    public Integer getCalcParallel() {
+        logger.info("Was invoked method for calc parallel test");
+
+        int sum = Stream
+                    .iterate(1, a -> a +1)
+                    .limit(1_000_000)
+                    .parallel()
+                    .reduce(0, Integer::sum);
+
+        return sum;
+    }
+
 }

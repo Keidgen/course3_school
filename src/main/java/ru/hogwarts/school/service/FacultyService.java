@@ -5,10 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Objects;
 
 @Service
@@ -50,5 +52,21 @@ public class FacultyService {
     public Collection<Faculty> findFacultiesByNameOrColor(String name, String color) {
         logger.info("Was invoked method for find faculty by name and color");
         return facultyRepository.findFacultiesByNameIgnoreCaseOrColorIgnoreCase(name, color);
+    }
+
+    public Collection<Faculty> findAll() {
+        logger.info("Was invoked method for find all faculties");
+        return facultyRepository.findAll();
+    }
+
+    public String getMostLongNameFaculty() {
+        logger.info("Was invoked method for get most long name faculty");
+        Collection<Faculty> faculties = findAll();
+
+        return faculties
+                .stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparing(String::length))
+                .orElseThrow();
     }
 }
