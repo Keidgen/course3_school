@@ -111,4 +111,58 @@ public class StudentService {
         return sum;
     }
 
+    public void printStudent(Student student) {
+        try {
+            System.out.println(student.toString());
+            Thread.sleep(500);
+        } catch (InterruptedException exception) {
+            System.out.println("Method was interrupted");
+        }
+    }
+
+    public void getPrintingStudentsWithThreads() {
+        List<Student> students = studentRepository.getStudentsSortedById();
+        printStudent(students.get(0));
+        printStudent(students.get(1));
+
+        new Thread(() -> {
+            printStudent(students.get(2));
+            printStudent(students.get(3));
+        }).start();
+
+        new Thread(() -> {
+            printStudent(students.get(4));
+            printStudent(students.get(5));
+        }).start();
+    }
+
+    private final Object flag = new Object();
+
+    public void printStudentSynchronized(Student student) {
+        synchronized (flag) {
+            try {
+                System.out.println(student.toString());
+                Thread.sleep(1000);
+            } catch (InterruptedException exception) {
+                System.out.println("Method was interrupted");
+            }
+        }
+    }
+
+    public void getStudentsUsingThreadsSynch() {
+        List<Student> students = studentRepository.getStudentsSortedById();
+        printStudentSynchronized(students.get(0)); //id = 1
+        printStudentSynchronized(students.get(1)); //id = 2
+
+        new Thread(() -> {
+            printStudentSynchronized(students.get(2)); //id = 3
+            printStudentSynchronized(students.get(3)); //id = 4
+        }).start();
+
+        new Thread(() -> {
+            printStudentSynchronized(students.get(4));
+            printStudentSynchronized(students.get(5));
+        }).start();
+    }
+
 }
