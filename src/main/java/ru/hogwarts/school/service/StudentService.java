@@ -136,32 +136,25 @@ public class StudentService {
         }).start();
     }
 
-    private final Object flag = new Object();
+ //   private final Object flag = new Object();
 
-    public void printStudentSynchronized(Student student) {
-        synchronized (flag) {
-            try {
-                System.out.println(student.toString());
-                Thread.sleep(1000);
-            } catch (InterruptedException exception) {
-                System.out.println("Method was interrupted");
-            }
-        }
+    public synchronized void printStudentSynchronized(int studentIteration) {
+        List<Student> students = studentRepository.getStudentsSortedById();
+
+        printStudent(students.get(studentIteration++));
+        printStudent(students.get(studentIteration++));
     }
 
     public void getStudentsUsingThreadsSynch() {
         List<Student> students = studentRepository.getStudentsSortedById();
-        printStudentSynchronized(students.get(0)); //id = 1
-        printStudentSynchronized(students.get(1)); //id = 2
+        printStudentSynchronized(0); //id = 1, 2
 
         new Thread(() -> {
-            printStudentSynchronized(students.get(2)); //id = 3
-            printStudentSynchronized(students.get(3)); //id = 4
+            printStudentSynchronized(2); //id = 3, 4
         }).start();
 
         new Thread(() -> {
-            printStudentSynchronized(students.get(4));
-            printStudentSynchronized(students.get(5));
+            printStudentSynchronized(4); //id = 5, 6
         }).start();
     }
 
