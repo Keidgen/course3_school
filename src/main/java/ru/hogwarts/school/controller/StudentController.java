@@ -115,4 +115,14 @@ public class StudentController {
     public ResponseEntity<Integer> getCalcParallel() {
         return ResponseEntity.ok(studentService.getCalcParallel());
     }
+
+    @GetMapping("/print_students")
+    public void getPrintingStudentsWithThreads() {
+        studentService.getPrintingStudentsWithThreads();
+    }
+
+    @GetMapping("/print_students_synch")
+    public void getPrintingStudentsWithThreadsSynch() {
+        studentService.getStudentsUsingThreadsSynch();
+    }
 }
