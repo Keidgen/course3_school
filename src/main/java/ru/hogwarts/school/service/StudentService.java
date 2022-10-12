@@ -142,7 +142,7 @@ public class StudentService {
         List<Student> students = studentRepository.getStudentsSortedById();
 
         printStudent(students.get(studentIteration++));
-        printStudent(students.get(studentIteration++));
+        printStudent(students.get(studentIteration));
     }
 
     public void getStudentsUsingThreadsSynch() {
